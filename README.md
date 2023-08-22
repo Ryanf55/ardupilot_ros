@@ -28,7 +28,7 @@ git clone git@github.com:ardupilot/ardupilot_ros.git
 Install dependencies using rosdep:
 ```bash
 cd ~/ros2_ws
-rosdep install --from-paths src --ignore-src -r
+rosdep install --from-paths src --ignore-src -r --skip-keys gazebo-ros-pkgs
 ```
 
 ## Build
@@ -77,3 +77,44 @@ If you'd like to get the information from Cartographer to go into Ardupilot's ex
 The parameters above are recommended for SITL. If you plan on using this on a real copter, it is a good idea to setup a second source of EKF. This way the robot doesn't crash if the external odometry you are providing stops publishing or gets lost.
 
 Please refer to this link for more information on [Common EKF Sources](https://ardupilot.org/copter/docs/common-ekf-sources.html>) as well as this guide on [GPS / Non-GPS Transitions](https://ardupilot.org/copter/docs/common-non-gps-to-gps.html).
+
+### 2. Obstacle avoidance using Cartographer and Nav2
+
+Using the same simulation as before, the nav2 node can be launched to control the copter once it is in the air.
+
+Launch the simulation:
+
+```bash
+cd ~/ros2_ws
+source install/setup.sh
+ros2 launch ardupilot_gz_bringup iris_maze.launch.py rviz:=false
+```
+Launch cartographer:
+
+```bash
+cd ~/ros2_ws
+source install/setup.sh
+ros2 launch ardupilot_ros cartographer.launch.py rviz:=false
+```
+
+Launch nav2:
+
+```bash
+cd ~/ros2_ws
+source install/setup.sh
+ros2 launch ardupilot_ros navigation.launch.py
+```
+
+Takeoff the Copter using `mavproxy` to an altitude of 2.5m:
+
+```bash
+mavproxy.py --console --map --aircraft test --master=:14550
+
+mode guided
+
+arm throttle
+
+takeoff 2.5
+```
+
+You may now navigate while mapping using the `Nav2 Goal` tool in RVIZ!
