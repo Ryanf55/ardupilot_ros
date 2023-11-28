@@ -1,3 +1,10 @@
+#!/usr/bin/python3
+
+# Python Software Foundation License Version 2.0
+
+# This LICENSE AGREEMENT is between the Python Software Foundation ("PSF"), and the Individual or Organization ("Licensee") accessing and otherwise using this software ("Python") in source or binary form and its associated documentation.
+
+
 import rclpy
 from rclpy.node import Node
 from sensor_msgs.msg import Joy
@@ -21,28 +28,33 @@ class KeyboardJoyPublisher(Node):
         self.listener.start()
 
     def on_press(self, key):
-        if key.char == "w":
+        if key == "w":
             self.axes[3] = 1.0
-        elif key.char == "a":
+        elif key == "a":
             self.axes[1] = -1.0
-        elif key.char == "s":
+        elif key == "s":
             self.axes[2] = 1.0
-        elif key.char == "d":
+        elif key == "d":
             self.axes[0] = 1.0
 
     def on_release(self, key):
-        if key.char == "w":
+        if key == "w":
             self.axes[3] = 0.0
-        elif key.char == "a":
+        elif key == "a":
             self.axes[1] = 0.0
-        elif key.char == "s":
+        elif key == "s":
             self.axes[2] = 0.0
-        elif key.char == "d":
+        elif key == "d":
             self.axes[0] = 0.0
 
     def publish_joy(self):
         joy_msg = Joy()
         joy_msg.axes = self.axes
+
+        now = self.get_clock().now()
+        joy_msg.header.stamp = now.to_msg()
+        joy_msg.header.stamp.nanosec = now.nanoseconds % 1000000000
+
         self.publisher_.publish(joy_msg)
 
 
