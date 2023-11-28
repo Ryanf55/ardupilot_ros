@@ -4,10 +4,14 @@
 
 First install the following package
 
-`pip install pynput`
+`colcon build`
 
-Then run the package using,
+Then source the workspace,
 
-`python joy_controller.py`
+`source ./install/local_setup.bash`
+
+Then run the controller using,
+
+`ros2 run ardupilot_ros joy_controller`
 
 Now, using the keyboard keys you can control the drone.
