@@ -80,6 +80,22 @@ The parameters above are recommended for SITL. If you plan on using this on a re
 
 Please refer to this link for more information on [Common EKF Sources](https://ardupilot.org/copter/docs/common-ekf-sources.html>) as well as this guide on [GPS / Non-GPS Transitions](https://ardupilot.org/copter/docs/common-non-gps-to-gps.html).
 
+### 2. Joystick Controller
+
+First install the following package
+
+`colcon build`
+
+Then source the workspace,
+
+`source ./install/local_setup.bash`
+
+Then run the controller using,
+
+`ros2 run ardupilot_ros joy_controller`
+
+Now, using the keyboard keys you can control the drone.
+
 ## Contribution Guideline
 
 * Ensure the [pre-commit](https://github.com/pre-commit/pre-commit) hooks pass locally before creating your pull request by installing the hooks before committing.
