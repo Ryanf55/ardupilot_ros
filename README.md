@@ -52,14 +52,14 @@ To launch rviz and gazebo, run:
 
 ```bash
 cd ~/ros2_ws
-source install/setup.sh
+source install/setup.bash
 ros2 launch ardupilot_gz_bringup iris_maze.launch.py
 ```
 In another terminal, with the world and copter in place, launch cartographer to generate SLAM:
 
 ```bash
 cd ~/ros2_ws
-source install/setup.sh
+source install/setup.bash
 ros2 launch ardupilot_ros cartographer.launch.py
 ```
 
@@ -82,13 +82,13 @@ Please refer to this link for more information on [Common EKF Sources](https://a
 
 ### 2. Joystick Controller
 
-First install the following package
+The joystick controller allows you to control ArduPilot through a ROS joy topic.
 
-`colcon build`
-
-Then source the workspace,
-
-`source ./install/local_setup.bash`
+```bash
+cd ~/ros2_ws
+source install/setup.bash
+ros2 run ardupilot_ros joy_controller
+```
 
 Then run the controller using,
 
